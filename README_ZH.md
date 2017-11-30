@@ -63,3 +63,22 @@ GLOBAL OPTIONS:
 你能够在 `~/.gitfeed/gitfeed.ini` 修改默认配置。
 
 ![](docs/wxpay.jpg)
+
+## 下一步？ ##
+
+你想要什么呢？
+
+请你创建新的 issue 给我吧。
+
+## 如何参与/贡献？ ##
+
+1. Fork 此项目
+2. 克隆你自己的项目到你本地 （git clone https://github.com/your_github_name/gitfeed.git）
+2. 创建你新的 feature 分支 (git checkout -b my_feature)
+3. 添加并提交你的修改内容 (git commit -am 'Add some feature')
+4. 推送到你自己项目的远端 feature 分支 (git push origin my_feature)
+5. 创建一个新的 PR（Pull Request）
+
+## License ##
+
+License: MIT License

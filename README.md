@@ -60,3 +60,13 @@ GLOBAL OPTIONS:
 ```
 
 You can modify the default configuration by editing ~/.gitfeed/gitfeed.ini
+
+## Next? ##
+
+What are you want?
+
+Please create a new Issue for me.
+
+## License ##
+
+License: MIT License
