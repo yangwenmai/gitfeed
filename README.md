@@ -1,6 +1,8 @@
 # GitFeed #
 [![Build Status](https://travis-ci.org/yangwenmai/gitfeed.svg?branch=master)](https://travis-ci.org/yangwenmai/gitfeed) [![Go Report Card](https://goreportcard.com/badge/github.com/yangwenmai/gitfeed)](https://goreportcard.com/report/github.com/yangwenmai/gitfeed)  [![Documentation](https://godoc.org/github.com/yangwenmai/gitfeed?status.svg)](http://godoc.org/github.com/yangwenmai/gitfeed) [![Coverage Status](https://coveralls.io/repos/github/yangwenmai/gitfeed/badge.svg?branch=master)](https://coveralls.io/github/yangwenmai/gitfeed?branch=master) [![GitHub issues](https://img.shields.io/github/issues/yangwenmai/gitfeed.svg)](https://github.com/yangwenmai/gitfeed/issues) [![license](https://img.shields.io/github/license/yangwenmai/gitfeed.svg?maxAge=2592000)](https://github.com/yangwenmai/gitfeed/LICENSE) [![Release](https://img.shields.io/github/release/yangwenmai/gitfeed.svg?label=Release)](https://github.com/yangwenmai/gitfeed/releases)
 
+[中文版本](README_ZH.md)
+
 Check your GitHub Newsfeed via the command-line in Go, insipred by [GitFeed](https://github.com/ritiek/GitFeed).
 
 Newsfeed includes all the news from people you are following on GitHub, repositories you are watching, etc.
