@@ -66,7 +66,7 @@ type Payload struct {
 
 // Forkee forkee
 type Forkee struct {
-	ID          string `json:"id"`
+	ID          int32  `json:"id"`
 	Name        string `json:"name"`
 	FullName    string `json:"full_name"`
 	Owner       *Owner `json:"owner"`
@@ -104,7 +104,7 @@ type Member struct {
 
 // Owner owner
 type Owner struct {
-	ID           string `json:"id"`
+	ID           int32  `json:"id"`
 	Login        string `json:"login"`
 	DisplayLogin string `json:"display_login"`
 	GravatarID   string `json:"gravatar_id"`
