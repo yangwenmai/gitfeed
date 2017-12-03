@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"time"
 
@@ -41,11 +40,12 @@ func main() {
 		cfgInfo := LoadGitFeedCfg(c)
 		name := cfgInfo.Username
 		maxPage := cfgInfo.MaxPage
+		debug := cfgInfo.Debug
 		if len(name) > 0 && maxPage > 0 {
-			// 这里是整个功能的入口
 			startTime := time.Now()
-			ReceivedEvents(name, maxPage, c.String("include"), c.String("exclude"))
-			fmt.Printf("Total cost( %v )", time.Now().Sub(startTime))
+			// 这里是整个功能的入口
+			ReceivedEvents(name, maxPage, debug, c.String("include"), c.String("exclude"))
+			cost("Total", startTime)
 		}
 		return nil
 	}

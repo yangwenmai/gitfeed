@@ -20,17 +20,18 @@ var (
 	width  = "32px"
 	height = "32px"
 	size   = ""
+	debug  = false
 )
 
 // NewsFeed newsfeed
 type NewsFeed struct {
-	ID        string   `json:"id"`
-	Type      string   `json:"type"`
-	Actor     *Actor   `json:"actor"`
-	Repo      *Repo    `json:"repo"`
-	Payload   *Payload `json:"payload"`
-	Public    bool     `json:"public"`
-	CreatedAt string   `json:"created_at"`
+	ID        string  `json:"id"`
+	Type      string  `json:"type"`
+	Actor     Actor   `json:"actor"`
+	Repo      Repo    `json:"repo"`
+	Payload   Payload `json:"payload"`
+	Public    bool    `json:"public"`
+	CreatedAt string  `json:"created_at"`
 }
 
 // Actor actor
@@ -52,18 +53,18 @@ type Repo struct {
 
 // Payload payload
 type Payload struct {
-	Action       string       `json:"action"`
-	Ref          string       `json:"ref"`
-	RefType      string       `json:"ref_type"`
-	MasterBranch string       `json:"master_branch"`
-	Description  string       `json:"description"`
-	PusherType   string       `json:"pusher_type"`
-	Size         int32        `json:"size"`
-	Forkee       *Forkee      `json:"forkee"`
-	PullRequest  *PullRequest `json:"pull_request"`
-	Comment      *Comment     `json:"comment"`
-	Issue        *Issue       `json:"issue"`
-	Member       *Member      `json:"member"`
+	Action       string      `json:"action"`
+	Ref          string      `json:"ref"`
+	RefType      string      `json:"ref_type"`
+	MasterBranch string      `json:"master_branch"`
+	Description  string      `json:"description"`
+	PusherType   string      `json:"pusher_type"`
+	Size         int32       `json:"size"`
+	Forkee       Forkee      `json:"forkee"`
+	PullRequest  PullRequest `json:"pull_request"`
+	Comment      Comment     `json:"comment"`
+	Issue        Issue       `json:"issue"`
+	Member       Member      `json:"member"`
 }
 
 // Forkee forkee
@@ -71,7 +72,7 @@ type Forkee struct {
 	ID          int32  `json:"id"`
 	Name        string `json:"name"`
 	FullName    string `json:"full_name"`
-	Owner       *Owner `json:"owner"`
+	Owner       Owner  `json:"owner"`
 	HTMLURL     string `json:"html_url"`
 	Description string `json:"description"`
 	URL         string `json:"url"`
@@ -81,27 +82,80 @@ type Forkee struct {
 
 // PullRequest pr
 type PullRequest struct {
-	Number string
-	State  string
-	Title  string
-	Body   string
+	Number   string `json:"number"`
+	State    string `json:"state"`
+	Title    string `json:"title"`
+	URL      string `json:"url"`
+	HTMLURL  string `json:"html_url"`
+	DiffURL  string `json:"diff_url"`
+	PatchURL string `json:"patch_url"`
+	Body     string `json:"body"`
 }
 
 // Comment comment
 type Comment struct {
-	Body string
+	ID                int32  `json:"id"`
+	URL               string `json:"url"`
+	HTMLURL           string `json:"html_url"`
+	IssueURL          string `json:"issue_url"`
+	User              User   `json:"user"`
+	CreatedAt         string `json:"created_at"`
+	UpdatedAt         string `json:"updated_at"`
+	AuthorAssociation string `json:"author_association"`
+	Body              string `json:"body"`
+}
+
+// User user
+type User struct {
+	ID                int32  `json:"id"`
+	Login             string `json:"login"`
+	GravatarID        string `json:"gravatar_id"`
+	URL               string `json:"url"`
+	AvatarURL         string `json:"avatar_url"`
+	Type              string `json:"type"`
+	SiteAdmin         string `json:"site_admin"`
+	HTMLURL           string `json:"html_url"`
+	FollowersURL      string `json:"followers_url"`
+	FollowingURL      string `json:"following_url"`
+	GistsURL          string `json:"gists_url"`
+	StarredURL        string `json:"starred_url"`
+	SubscriptionsURL  string `json:"subscriptions_url"`
+	OrganizationsURL  string `json:"organizations_url"`
+	ReposURL          string `json:"repos_url"`
+	EventsURL         string `json:"events_url"`
+	ReceivedEventsURL string `json:"received_events_url"`
 }
 
 // Issue issue
 type Issue struct {
-	Number      string
-	Title       string
-	PullRequest *PullRequest
+	ID                int32       `json:"id"`
+	Number            string      `json:"number"`
+	Title             string      `json:"title"`
+	URL               string      `json:"url"`
+	RepositoryURL     string      `json:"repository_url"`
+	LabelsURL         string      `json:"labels_url"`
+	CommentsURL       string      `json:"comments_url"`
+	EventsURL         string      `json:"events_url"`
+	HTMLURL           string      `json:"html_url"`
+	Labels            []string    `json:"labels"`
+	State             string      `json:"state"`
+	Locked            bool        `json:"locked"`
+	Assignee          string      `json:"assignee"`
+	Assignees         []string    `json:"assignees"`
+	Milestone         string      `json:"milestone"`
+	Comments          int32       `json:"comments"`
+	User              User        `json:"user"`
+	CreatedAt         string      `json:"created_at"`
+	UpdatedAt         string      `json:"updated_at"`
+	ClosedAt          string      `json:"closed_at"`
+	AuthorAssociation string      `json:"author_association"`
+	Body              string      `json:"body"`
+	PullRequest       PullRequest `json:"pull_request"`
 }
 
 // Member member
 type Member struct {
-	Login string
+	Login string `json:"login"`
 }
 
 // Owner owner
@@ -133,9 +187,8 @@ func PREvent(item NewsFeed) (string, string) {
 
 	if state == "open" {
 		return avatar, fmt.Sprintf("%s opened pull request %s on %s \n %s \n %s \a at %v\n", user, number, repo, title, body, item.CreatedAt)
-	} else {
-		return avatar, fmt.Sprintf("%s closed pull request %s on %s \n %s \a at %v\n", user, number, repo, title, item.CreatedAt)
 	}
+	return avatar, fmt.Sprintf("%s closed pull request %s on %s \n %s \a at %v\n", user, number, repo, title, item.CreatedAt)
 }
 
 // comment on issue, PR
@@ -145,7 +198,7 @@ func issueCommentEvent(item NewsFeed) (string, string) {
 	body := item.Payload.Comment.Body
 
 	group := ""
-	if item.Payload.Issue.PullRequest != nil {
+	if item.Payload.Issue.PullRequest.Body != "" {
 		group = "pull request"
 	} else {
 		group = "issue"
@@ -205,9 +258,8 @@ func createEvent(item NewsFeed) (string, string) {
 	branch := item.Payload.Ref
 	if group == "repository" {
 		return avatar, fmt.Sprintf("%s created %s %s \a at %v\n\n", user, group, repo, item.CreatedAt)
-	} else {
-		return avatar, fmt.Sprintf("%s created %s %s at %s \a at %v\n\n", user, group, branch, repo, item.CreatedAt)
 	}
+	return avatar, fmt.Sprintf("%s created %s %s at %s \a at %v\n\n", user, group, branch, repo, item.CreatedAt)
 }
 
 // # make public repo
@@ -229,17 +281,22 @@ func getFeedBaseInfoAndPrintAvatar(item NewsFeed) (string, string, string) {
 	user := item.Actor.Login
 	repo := item.Repo.Name
 	avatarURL := item.Actor.AvatarURL
-	var avatar string
+	return user, repo, loadAvatar(avatarURL)
+}
 
+func loadAvatar(avatarURL string) (avatar string) {
 	if len(avatarURL) > 0 {
 		res, err := http.Get(avatarURL)
 		if err != nil {
-			fmt.Printf("%s", err)
+			log.Fatalf("http get %s, err:%v", avatarURL, err)
+			return ""
 		}
-		defer res.Body.Close()
-		avatar = display(res.Body) //
+		if res.Body != nil {
+			defer res.Body.Close()
+		}
+		avatar = display(res.Body)
 	}
-	return user, repo, avatar
+	return avatar
 }
 
 func getReceivedEvents(user, pageNo, include, exclude string) {
@@ -247,16 +304,19 @@ func getReceivedEvents(user, pageNo, include, exclude string) {
 
 	startTime := time.Now()
 	_, data, _ := GetJSON(url)
-	log.Printf("request Github API: /users/:user/received_events cost ( %v )\n", time.Now().Sub(startTime))
+	cost("request Github API: /users/:user/received_events", startTime)
 	// TODO: optimize
 	r := gjson.Parse(data)
-	for _, it := range r.Array() {
-		event := it.Get("type").String()
 
+	startTime = time.Now()
+	for _, it := range r.Array() {
+		st := time.Now()
+		event := it.Get("type").String()
 		item := NewsFeed{}
 		json.Unmarshal([]byte(it.String()), &item)
-		var content, avatar string
+		// item.CreatedAt = it.Get("created_at").String()
 
+		var content, avatar string
 		switch event {
 		case "PullRequestReviewCommentEvent":
 			avatar, content = PRReviewEvent(item)
@@ -286,11 +346,13 @@ func getReceivedEvents(user, pageNo, include, exclude string) {
 		}
 
 		output(avatar, content, include, exclude)
+		cost("every one", st)
 	}
+	cost("every page", startTime)
 }
 
 // ReceivedEvents get received events
-func ReceivedEvents(user string, maxPage int, include, exclude string) {
+func ReceivedEvents(user string, maxPage int, debug bool, include, exclude string) {
 	for page := 1; page <= maxPage; page++ {
 		getReceivedEvents(user, fmt.Sprintf("%d", page), include, exclude)
 	}
@@ -344,4 +406,10 @@ func output(avatar, content, include, exclude string) {
 		return
 	}
 	fmt.Print(avatar, content)
+}
+
+func cost(fmtStr string, startTime time.Time) {
+	if debug {
+		defer fmt.Printf("%s , cost (%v)\n", fmtStr, time.Now().Sub(startTime))
+	}
 }

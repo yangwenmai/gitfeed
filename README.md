@@ -3,17 +3,16 @@
 
 [中文版本](README_ZH.md)
 
-Check your GitHub Newsfeed via the command-line in Go, insipred by [GitFeed](https://github.com/ritiek/GitFeed).
+Check GitHub Newsfeed via the command-line in Go, insipred by [GitFeed](https://github.com/ritiek/GitFeed).
 
 Newsfeed includes all the news from people you are following on GitHub, repositories you are watching, etc.
 
 All news you would find on your GitHub dashboard.
 
-[Github Events](https://developer.github.com/v3/activity/events/#list-public-events-that-a-user-has-received)
+Base on [Github Evets](https://developer.github.com/v3/activity/events/#list-public-events-that-a-user-has-received)
 
-**List events that a user has received**
-
-These are events that you've received by watching repos and following users. If you are authenticated as the given user, you will see private events. Otherwise, you'll only see public events.
+>**List events that a user has received**
+>These are events that you've received by watching repos and following users. If you are authenticated as the given user, you will see private events. Otherwise, you'll only see public events.
 
 ## Screenshots ##
 
@@ -25,7 +24,9 @@ These are events that you've received by watching repos and following users. If 
 
 2. install gitfeed by source
 
+    - `cd $GOPATH/src/github.com/yangwenmai/`
     - `git clone https://github.com/yangwenmai/gitfeed.git`
+    - `cd gitfeed`
     - `go build && ./gitfeed`
 
 ## Usage ##
@@ -55,15 +56,17 @@ COMMANDS:
      help, h  Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
-   --config FILE, -c FILE  Load configuration from FILE (default:~/.gitfeed/gitfeed.ini)
-   --user value, -u value  Github username
-   --help, -h              show help
-   --version, -v           print the version
+   --config FILE, -c FILE     Load configuration from FILE (default:~/.gitfeed/gitfeed.ini)
+   --user value, -u value     Github username
+   --include value, -i value  Include words. Wildcard pattern matching with support for '?' and '*'
+   --exclude value, -e value  Exclude words. Wildcard pattern matching with support for '?' and '*'
+   --help, -h                 show help
+   --version, -v              print the version
 ```
 
 You can modify the default configuration by editing ~/.gitfeed/gitfeed.ini
 
-## Next? ##
+## Roadmap ##
 
 What are you want?
 

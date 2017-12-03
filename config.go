@@ -8,10 +8,11 @@ import (
 	"github.com/urfave/cli"
 )
 
-// LoadConfigFile 加载gitfeed配置文件
+// LoadGitFeedCfg 加载 gitfeed 配置文件
 func LoadGitFeedCfg(c *cli.Context) GitFeedCfg {
 	username := ""
 	maxPage := 1
+	debug := false
 
 	// 从指令中加载参数
 	if len(c.String("user")) > 0 {
@@ -19,6 +20,9 @@ func LoadGitFeedCfg(c *cli.Context) GitFeedCfg {
 	}
 	if c.Int("max_page") > 0 {
 		maxPage = c.Int("max_page")
+	}
+	if c.Bool("debug") {
+		debug = true
 	}
 
 	if len(username) == 0 {
@@ -39,18 +43,24 @@ func LoadGitFeedCfg(c *cli.Context) GitFeedCfg {
 		}
 		maxPage, err = cfg.Int("GitHub Newsfeed", "max_page")
 		if err != nil {
-			log.Fatalf("无法获取键值（%s）：%s", "username", err)
+			log.Fatalf("无法获取键值（%s）：%s", "max_page", err)
+		}
+		debug, err = cfg.Bool("GitHub Newsfeed", "debug")
+		if err != nil {
+			log.Fatalf("无法获取键值（%s）：%s", "debug", err)
 		}
 	}
 
 	cfgInfo := GitFeedCfg{}
 	cfgInfo.Username = username
 	cfgInfo.MaxPage = maxPage
+	cfgInfo.Debug = debug
 	return cfgInfo
 }
 
 // GitFeedCfg gitfeed config
 type GitFeedCfg struct {
-	Username string
-	MaxPage  int
+	Username string `json:"username"`
+	MaxPage  int    `json:"max_page"`
+	Debug    bool   `json:"debug"`
 }
