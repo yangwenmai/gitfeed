@@ -26,6 +26,16 @@ func main() {
 			Value: "",
 			Usage: "Github username",
 		},
+		cli.StringFlag{
+			Name:  "include,i",
+			Value: "",
+			Usage: "Include words. Wildcard pattern matching with support for '?' and '*'",
+		},
+		cli.StringFlag{
+			Name:  "exclude,e",
+			Value: "",
+			Usage: "Exclude words. Wildcard pattern matching with support for '?' and '*'",
+		},
 	}
 	app.Action = func(c *cli.Context) error {
 		cfgInfo := LoadGitFeedCfg(c)
@@ -34,7 +44,7 @@ func main() {
 		if len(name) > 0 && maxPage > 0 {
 			// 这里是整个功能的入口
 			startTime := time.Now()
-			ReceivedEvents(name, maxPage)
+			ReceivedEvents(name, maxPage, c.String("include"), c.String("exclude"))
 			fmt.Printf("Total cost( %v )", time.Now().Sub(startTime))
 		}
 		return nil
