@@ -3,6 +3,8 @@
 
 [中文版本](README_ZH.md)
 
+[Join Us On Slack](https://join.slack.com/t/gitfeed/shared_invite/enQtMjgwNTU5MTE5NjgxLTA5NDQwYzE4NGNhNDI3N2E0ZmYwOGM2MWNjMDUyNjczY2I0OThiNzA5ZTk0MTc1MGYyYzk0NTA0MjM4OTZhYWE)
+
 Check GitHub Newsfeed via the command-line in Go, insipred by [GitFeed](https://github.com/ritiek/GitFeed).
 
 Newsfeed includes all the news from people you are following on GitHub, repositories you are watching, etc.

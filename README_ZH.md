@@ -3,6 +3,8 @@
 
 在命令行查看 Github 用户的 Newsfeed，包括 Github 用户 follow 的人，以及 watch 的仓库等所有动态，这些动态你都能够在你的 Github 控制面板上看到。
 
+[Join Us On Slack](https://join.slack.com/t/gitfeed/shared_invite/enQtMjgwNTU5MTE5NjgxLTA5NDQwYzE4NGNhNDI3N2E0ZmYwOGM2MWNjMDUyNjczY2I0OThiNzA5ZTk0MTc1MGYyYzk0NTA0MjM4OTZhYWE)
+
 Newsfeed 是基于 [Github Events API]( https://developer.github.com/v3/activity/events/#list-public-events-that-a-user-has-received)。
 
 初始版本的灵感来源于：[GitFeed-Python](https://github.com/ritiek/GitFeed).
