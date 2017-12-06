@@ -19,6 +19,7 @@ install:
 script:
     - overalls -project=github.com/yangwenmai/gitfeed -covermode=count -ignore='.git,vendor'
     - goveralls -coverprofile=overalls.coverprofile -service=travis-ci -repotoken $COVERALLS_TOKEN
+    - go test -race -coverprofile=coverage.txt -covermode=atomic
     - go test ./...
 
 after_success:
