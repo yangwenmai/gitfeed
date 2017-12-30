@@ -11,7 +11,7 @@ Newsfeed includes all the news from people you are following on GitHub, reposito
 
 All news you would find on your GitHub dashboard.
 
-Base on [Github Evets](https://developer.github.com/v3/activity/events/#list-public-events-that-a-user-has-received)
+Base on [Github Events API](https://developer.github.com/v3/activity/events/#list-public-events-that-a-user-has-received)
 
 >**List events that a user has received**
 >These are events that you've received by watching repos and following users. If you are authenticated as the given user, you will see private events. Otherwise, you'll only see public events.
