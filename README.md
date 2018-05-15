@@ -29,6 +29,8 @@ Base on [Github Events API](https://developer.github.com/v3/activity/events/#lis
     - `cd $GOPATH/src/github.com/yangwenmai/`
     - `git clone https://github.com/yangwenmai/gitfeed.git`
     - `cd gitfeed`
+    - `mkdir -p ~/.gitfeed`
+    - `cp gitfeed.ini.example ~/.gitfeed/gitfeed.ini`
     - `go build && ./gitfeed`
 
 ## Usage ##
